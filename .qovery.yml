@@ -1,0 +1,11 @@
+---
+application:
+  name: "seedtelebot"
+  project: "SeedTelegram"
+  organization: "QoveryCommunity"
+routers:
+- name: "main-seedtelebot"
+  routes:
+  - application_name: "seedtelebot"
+    paths:
+    - "/*"

@@ -1,0 +1,12 @@
+{
+  "name": "seedworldbot",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node index"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "node-telegram-bot-api": "^0.52.0"
+  }
+}

@@ -3,7 +3,7 @@ application:
   name: "seedtelebot"
   project: "SeedTelegram"
   organization: "QoveryCommunity"
-  port: 8080
+  port: 3000
 routers:
 - name: "main-seedtelebot"
   routes:

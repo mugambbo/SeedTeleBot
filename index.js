@@ -95,6 +95,7 @@ const BANNABLE_WORDS = [
       const chatId = msg.chat.id;
       console.log(msg);
       const username = match[1];
+      const until = match[2];
       const userId = msg.from.id;
       const banUserId = msg.entities[1].user.id;
       console.log("Username to mute: "+username);
@@ -102,7 +103,7 @@ const BANNABLE_WORDS = [
       bot.getChatAdministrators(chatId).then(resp => {
         resp.forEach((val, index) => {
           if (val.user.id == userId){ //if this user is an admin
-                bot.restrictChatMember(chatId, banUserId).then(res => {
+                bot.restrictChatMember(chatId, banUserId, {"until_date": (until || (new Date().getMilliseconds + 24)) * 3600000}).then(res => {
                   console.log("Member restricted: "+banUserId);
                 }).catch(err => {
                   console.log("Could not mute user: "+err);
@@ -113,7 +114,7 @@ const BANNABLE_WORDS = [
     })  
   
     //Send me the logo
-    bot.onText(/\/logo/, (msg, match) => {
+    bot.onText(/\/photo/, (msg, match) => {
       const chatId = msg.chat.id;
       bot.sendPhoto(chatId, "https://picsum.photos/200/300").then(res => {
         console.log("Logo sent");

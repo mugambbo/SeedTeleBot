@@ -4,6 +4,12 @@ if (process.env.NODE_ENV !== 'production') {
 process.env["NTBA_FIX_319"] = 1;
 const TelegramBot = require('node-telegram-bot-api');
 const http = require('http');
+const port = process.env.PORT || 3000;
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  const msg = 'Project SEED!\n'
+  res.end(msg);
+});
 
 
 const BANNABLE_WORDS = [
@@ -147,16 +153,8 @@ const BANNABLE_WORDS = [
       console.log("Error deleted message: "+err);
     });       
   }
-  
-  setupTelegramBot(); //Execute telegram bot
 
-const port = process.env.PORT || 3000;
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  const msg = 'Project SEED!\n'
-  res.end(msg);
-});
-
-server.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}/`);
-});
+  server.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}/`);
+    setupTelegramBot(); //Execute telegram bot
+  });

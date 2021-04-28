@@ -116,16 +116,18 @@ const BANNABLE_WORDS = [
     //Send me the logo
     bot.onText(/\/photo/, (msg, match) => {
       const chatId = msg.chat.id;
-      bot.sendPhoto(chatId, "https://picsum.photos/200/300").then(res => {
-        console.log("Logo sent");
+      const url = `https://source.unsplash.com/1600x900/?${match[1]}`;
+      bot.sendPhoto(chatId, url).then(res => {
+        console.log("Photo sent");
       }).catch(err => {
-        console.log("Could not find logo: "+err);
-        bot.sendMessage(chatId, "Could not find logo: "+err);
+        console.log("Could not find photo: "+err);
+        bot.sendMessage(chatId, "Could not find photo: "+err);
       });
     })
   
     // Listen for any kind of message. There are different kinds of messages.
     bot.on('message', (msg) => {
+      const chatId = msg.chat.id;
       console.log(msg);
       const words = msg.text.toLowerCase().replace(/[^a-zA-Z ]/g, "").split(" ");
       console.log("Words probably bannable: "+words);
@@ -135,7 +137,13 @@ const BANNABLE_WORDS = [
           deleteMessage(bot, msg);
           return true;
         }
-      })
+      });
+
+      if (msg.text.toLowerCase().trim().includes("@seedworldbot")) {
+        const message = `Hi ${msg.from.username}, how may I help you? Check out what I can do:\n1. Ban a user from a group chat (only by admin). e.g. '/ban @SeedWorldBot'\n2. Unban a user from a group chat (only by admin) e.g. '/unban @SeedWorldBot'\n3. Display random photo based on a search term e.g. '/photo bitcoin'\n4. Mute a user from a group chat for x hours (only by admin) e.g. '/mute @SeedWorldBot 2'\n4. Delete new chat member messages (automatic)\n5. Delete censored messages containing specified words (automatic)`;
+        bot.sendMessage(chatId, message);
+      }
+
     });  
   
     bot.on('new_chat_members', (msg, match) => {

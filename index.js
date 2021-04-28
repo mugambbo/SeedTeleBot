@@ -99,6 +99,7 @@ const BANNABLE_WORDS = [
       const userId = msg.from.id;
       const banUserId = msg.entities[1].user.id;
       console.log("Username to mute: "+username);
+      console.log("Mute match: "+match);
   
       bot.getChatAdministrators(chatId).then(resp => {
         resp.forEach((val, index) => {
@@ -114,7 +115,7 @@ const BANNABLE_WORDS = [
     })  
   
     //Send me the logo
-    bot.onText(/\/photo/, (msg, match) => {
+    bot.onText(/\/photo (.+)/, (msg, match) => {
       const chatId = msg.chat.id;
       const url = `https://source.unsplash.com/1600x900/?${match[1]}`;
       bot.sendPhoto(chatId, url).then(res => {

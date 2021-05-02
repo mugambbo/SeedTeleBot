@@ -22,7 +22,7 @@ function buildWelcomeMessage(username) {
   const welcomeMessage = `Hi ${username}, how may I help you? Check out what I can do:\n
     1. Ban a user from a group chat (only by admin). e.g. '/ban @SeedWorldBot'\n
     2. Unban a user from a group chat (only by admin) e.g. '/unban @SeedWorldBot'\n
-    3. Display random photo based on a search term e.g. '/photo bitcoin'\n
+    3. Display photo based on a search term e.g. '/photo bitcoin'\n
     4. Mute a user from a group chat for x hours (only by admin) e.g. '/mute @SeedWorldBot 2'\n
     4. Delete new chat member messages (automatic)\n
     5. Delete censored messages containing specified words (automatic)`;

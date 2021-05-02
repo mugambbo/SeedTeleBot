@@ -11,13 +11,23 @@ const server = http.createServer((req, res) => {
   res.end(msg);
 });
 
-
 const BANNABLE_WORDS = [
   "fake",
   "scam",
   "shitcoin",
   "scammer"
 ]
+
+function buildWelcomeMessage(username) {
+  const welcomeMessage = `Hi ${username}, how may I help you? Check out what I can do:\n
+    1. Ban a user from a group chat (only by admin). e.g. '/ban @SeedWorldBot'\n
+    2. Unban a user from a group chat (only by admin) e.g. '/unban @SeedWorldBot'\n
+    3. Display random photo based on a search term e.g. '/photo bitcoin'\n
+    4. Mute a user from a group chat for x hours (only by admin) e.g. '/mute @SeedWorldBot 2'\n
+    4. Delete new chat member messages (automatic)\n
+    5. Delete censored messages containing specified words (automatic)`;
+  return welcomeMessage;
+}
 
 /**
  * Setup Telegram bot 
@@ -143,11 +153,16 @@ const BANNABLE_WORDS = [
         });
   
         if (msg.text.toLowerCase().trim().includes("@seedworldbot")) {
-          const message = `Hi ${msg.from.username}, how may I help you? Check out what I can do:\n1. Ban a user from a group chat (only by admin). e.g. '/ban @SeedWorldBot'\n2. Unban a user from a group chat (only by admin) e.g. '/unban @SeedWorldBot'\n3. Display random photo based on a search term e.g. '/photo bitcoin'\n4. Mute a user from a group chat for x hours (only by admin) e.g. '/mute @SeedWorldBot 2'\n4. Delete new chat member messages (automatic)\n5. Delete censored messages containing specified words (automatic)`;
-          bot.sendMessage(chatId, message);
+          const username = msg.from.username;
+          bot.sendMessage(chatId, buildWelcomeMessage(username));
         }  
       }
     });  
+
+    bot.onText(/\/start/, (msg) => {
+      const username = msg.from.username;
+      bot.sendMessage(msg.chat.id, buildWelcomeMessage(username));
+    });    
   
     bot.on('new_chat_members', (msg, match) => {
       deleteMessage(bot, msg);

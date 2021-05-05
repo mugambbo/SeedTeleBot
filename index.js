@@ -115,14 +115,14 @@ function buildWelcomeMessage(username) {
       bot.getChatAdministrators(chatId).then(resp => {
         resp.forEach((val, index) => {
           if (val.user.id == userId){ //if this user is an admin
-                bot.restrictChatMember(chatId, banUserId, {"until_date": (until || (new Date().getMilliseconds + 24)) * 3600000}).then(res => {
-                  console.log("Member restricted: "+banUserId);
-                }).catch(err => {
-                  console.log("Could not mute user: "+err);
-                });
-              }
+            bot.restrictChatMember(chatId, banUserId, {"until_date": (until || (new Date().getMilliseconds + 24)) * 3600000}).then(res => {
+              console.log("Member restricted: "+banUserId);
+            }).catch(err => {
+              console.log("Could not mute user: "+err);
             });
+          }
         });
+      });
     })  
   
     //Send me the logo
@@ -147,8 +147,24 @@ function buildWelcomeMessage(username) {
         words.some((word) => {
           if (BANNABLE_WORDS.includes(word)){
             console.log("Bannable word found: "+word);
-            deleteMessage(bot, msg);
-            return true;
+            const userId = msg.from.id;
+            bot.getChatAdministrators(chatId).then(resp => {
+              console.log("Administrators");
+              console.log(resp); //array of chat admins
+              let isAdmin = false;
+              resp.forEach((val, index) => {
+                if (val.user.id == userId){
+                  console.log("Action is from an admin, go ahead to delete bannable message");
+                  isAdmin = true;
+                }
+              });
+              
+              if (!isAdmin) {
+                deleteMessage(bot, msg);
+              }
+            });
+
+            return true; //Ends further execution
           }
         });
   

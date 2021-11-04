@@ -15,7 +15,9 @@ const BANNABLE_WORDS = [
   "fake",
   "scam",
   "shitcoin",
-  "scammer"
+  "scammer",
+  "fuck",
+  "wtf",
 ]
 
 function buildWelcomeMessage(username) {
@@ -24,8 +26,8 @@ function buildWelcomeMessage(username) {
     2. Unban a user from a group chat (only by admin) e.g. '/unban @SeedWorldBot'\n
     3. Display photo based on a search term e.g. '/photo bitcoin'\n
     4. Mute a user from a group chat for x hours (only by admin) e.g. '/mute @SeedWorldBot 2'\n
-    4. Delete new chat member messages (automatic)\n
-    5. Delete censored messages containing specified words (automatic)`;
+    5. Delete new chat member messages (automatic)\n
+    6. Delete censored messages containing specified words (automatic)`;
   return welcomeMessage;
 }
 
